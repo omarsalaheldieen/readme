@@ -1,4 +1,3 @@
-
 # 🎥 **Caster**
 Welcome to Caster! Caster is a user-friendly WPF application built with C# and .NET Framework 4.8. Designed for capturing users’ reactions to videos, Caster simplifies the process of recording, saving, and sharing reaction videos. Whether you're conducting research or creating engaging content, Caster is here to make your workflow seamless and efficient.
 
@@ -11,8 +10,6 @@ Welcome to Caster! Caster is a user-friendly WPF application built with C# and .
 4. [Installation](#-installation)  
    - [Requirements](#requirements)  
    - [Setup Instructions](#setup-instructions)  
-5. [Design](#-design)  
-6. [Support](#-support)  
 
 ---
 
@@ -94,22 +91,10 @@ Below is a list of all the NuGet packages used in **Caster**:
 
 ---
 
-## 🎨 Design
-
-### Modern UI Features:  
-- **Material Design**: The app integrates Material Design Themes for an elegant and responsive interface.  
-- **Intuitive Navigation**: Guided workflows ensure seamless user interactions.  
-
-### Key Design Elements:  
-- **Dark Mode Background**: Designed for focus and clarity.  
-- **Smooth Transitions**: Enhances user experience.  
-
----
-
 ## 🛠️ Support
 
 If you encounter any issues or have questions, feel free to reach out:  
-- **Email**: [omarsalah56er@gmail.com](mailto:support@casterapp.com)  
+- **Email**: [omarsalah56er@gmail.com](mailto:omarsalah56er@gmail.com)  
 - **GitHub Issues**: [Submit an issue](https://github.com/your-repo/caster/issues)  
 
 ---
