@@ -50,14 +50,15 @@ public class EvenOdd {
             for (Text val : values) {
                 int num = Integer.parseInt(val.toString());
                 if (expression.length() > 0) {
-                    expression.append("+");
+                    expression.append(" + ");
                 }
                 expression.append(num);
                 sum += num;
             }
-            expression.append(" = ").append(sum);
-            result.set(expression.toString());
-            context.write(key, result);
+            String formattedOutput = String.format("Sum of %s Numbers: %s = %d",
+                    key.toString(), expression.toString(), sum);
+            result.set(formattedOutput);
+            context.write(null, result); // Use null key for a clean output.
         }
     }
 
