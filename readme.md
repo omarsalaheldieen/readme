@@ -3,7 +3,6 @@ import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -14,41 +13,50 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class EvenOdd {
 
     public static class TokenizeMapper
-            extends Mapper<Object, Text, Text, IntWritable> {
+            extends Mapper<Object, Text, Text, Text> {
 
-        private static final IntWritable number = new IntWritable();
         private Text evenOddKey = new Text();
+        private Text numberValue = new Text();
 
         @Override
         protected void map(Object key, Text value, Context context)
                 throws IOException, InterruptedException {
             StringTokenizer itr = new StringTokenizer(value.toString());
             while (itr.hasMoreTokens()) {
-                int num = Integer.parseInt(itr.nextToken());
+                String numStr = itr.nextToken();
+                int num = Integer.parseInt(numStr);
                 if (num % 2 == 0) {
                     evenOddKey.set("Even");
                 } else {
                     evenOddKey.set("Odd");
                 }
-                number.set(num);
-                context.write(evenOddKey, number);
+                numberValue.set(numStr);
+                context.write(evenOddKey, numberValue);
             }
         }
     }
 
     public static class EvenOddReducer
-            extends Reducer<Text, IntWritable, Text, IntWritable> {
+            extends Reducer<Text, Text, Text, Text> {
 
-        private IntWritable result = new IntWritable();
+        private Text result = new Text();
 
         @Override
-        protected void reduce(Text key, Iterable<IntWritable> values, Context context)
+        protected void reduce(Text key, Iterable<Text> values, Context context)
                 throws IOException, InterruptedException {
+            StringBuilder expression = new StringBuilder();
             int sum = 0;
-            for (IntWritable val : values) {
-                sum += val.get();
+
+            for (Text val : values) {
+                int num = Integer.parseInt(val.toString());
+                if (expression.length() > 0) {
+                    expression.append("+");
+                }
+                expression.append(num);
+                sum += num;
             }
-            result.set(sum);
+            expression.append(" = ").append(sum);
+            result.set(expression.toString());
             context.write(key, result);
         }
     }
@@ -62,7 +70,7 @@ public class EvenOdd {
         job.setReducerClass(EvenOddReducer.class);
 
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+        job.setOutputValueClass(Text.class);
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
